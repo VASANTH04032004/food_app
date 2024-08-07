@@ -1,5 +1,3 @@
-// product_card.dart
-
 import 'package:flutter/material.dart';
 
 import '../ module/products.dart';
