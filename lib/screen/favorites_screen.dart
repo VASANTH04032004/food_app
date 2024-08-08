@@ -4,6 +4,7 @@ import 'package:food/screen/produets_widget.dart';
 
 import '../ module/products.dart';
 
+
 class FavoritesScreen extends StatefulWidget {
   final Map<int, bool> favorites;
   final List<Product> products;
@@ -46,23 +47,25 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
           itemCount: favoriteProducts.length,
           itemBuilder: (context, index) {
             final product = favoriteProducts[index];
-            final isFavorite = widget.favorites[index] ?? false;
+            final isFavorite = widget.favorites[widget.products.indexOf(product)] ?? false;
 
             return ProductCard(
               item: product,
               isFavorite: isFavorite,
-              onToggleFavorite: () => widget.toggleFavorite(product),
+              onToggleFavorite: () {
+                widget.toggleFavorite(product);
+                setState(() {});
+              },
               onTap: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductDetailScreen(
-                      product: product,
-                      isLoggedIn: true, // Assuming true for demo
-                      isFavorite: isFavorite,
-                      toggleFavorite: () => widget.toggleFavorite(product),
-                    ),
-                  ),
+                  ProductDetailScreen.routeName,
+                  arguments: {
+                    'product': product,
+                    'isLoggedIn': true, // Assuming true for demo
+                    'isFavorite': isFavorite,
+                    'toggleFavorite': () => widget.toggleFavorite(product),
+                  },
                 );
               },
             );

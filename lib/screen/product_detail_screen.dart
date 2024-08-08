@@ -1,22 +1,10 @@
-// product_detail_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:food/screen/side_menu.dart';
-
 import '../ module/products.dart';
 
-class ProductDetailScreen extends StatefulWidget {
-  final Product product;
-  final bool isLoggedIn;
-  late bool isFavorite;
-  final void Function() toggleFavorite;
 
-  ProductDetailScreen({
-    required this.product,
-    required this.isLoggedIn,
-    required this.isFavorite,
-    required this.toggleFavorite,
-  });
+class ProductDetailScreen extends StatefulWidget {
+  static const routeName = '/productDetail';
 
   @override
   _ProductDetailScreenState createState() => _ProductDetailScreenState();
@@ -24,6 +12,20 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isMenuOpen = false;
+  late Product product;
+  late bool isLoggedIn;
+  late bool isFavorite;
+  late VoidCallback toggleFavorite;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    product = args['product'];
+    isLoggedIn = args['isLoggedIn'];
+    isFavorite = args['isFavorite'];
+    toggleFavorite = args['toggleFavorite'];
+  }
 
   void toggleMenu() {
     setState(() {
@@ -59,7 +61,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     },
                   ),
                   title: Text(
-                    widget.product.title,
+                    product.title,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -69,18 +71,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   actions: [
                     GestureDetector(
                       onTap: () {
-                        widget.toggleFavorite(); // Toggle favorite status
+                        toggleFavorite(); // Toggle favorite status
                         setState(() {
-                          widget.isFavorite = !widget.isFavorite;
+                          isFavorite = !isFavorite;
                         });
                       },
                       child: Container(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
-                          widget.isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: widget.isFavorite ? Colors.red : Colors.white,
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : Colors.white,
                         ),
                       ),
                     ),
@@ -104,7 +104,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.asset(
-                              widget.product.image,
+                              product.image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -116,7 +116,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           Icon(Icons.star, color: Colors.yellow[800]),
                           SizedBox(width: 4.0),
                           Text(
-                            widget.product.rating.toString(),
+                            product.rating.toString(),
                             style: TextStyle(fontSize: 16),
                           ),
                         ],
@@ -125,7 +125,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: 0.0, right: 0.0),
                         child: Text(
-                          widget.product.description,
+                          product.description,
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -143,7 +143,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             bottom: 0,
             child: SideMenuScreen(
               onClose: toggleMenu,
-              isLoggedIn: widget.isLoggedIn,
+              isLoggedIn: isLoggedIn,
             ),
           ),
         ],

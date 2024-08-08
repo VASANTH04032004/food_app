@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food/screen/login_screen.dart';
 import 'package:food/screen/profile_screen.dart';
 
+import 'category_screen.dart';
+
 class SideMenuScreen extends StatelessWidget {
   final VoidCallback onClose;
   final bool isLoggedIn;
@@ -53,6 +55,10 @@ class SideMenuScreen extends StatelessWidget {
                     leading: Icon(Icons.category),
                     title: Text('Category'),
                     onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CategoryScreen()), // Navigate to CategoryScreen
+                      );
                     },
                   ),
                   Divider(),

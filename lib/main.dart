@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:food/screen/home_screen.dart';
+import 'package:food/screen/product_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,11 +19,15 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: Consumer<AuthProvider>(
-          builder: (context, authProvider, _) {
-            return HomeScreen(isLoggedIn: authProvider.isLoggedIn);
-          },
-        ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Consumer<AuthProvider>(
+            builder: (context, authProvider, _) {
+              return HomeScreen(isLoggedIn: authProvider.isLoggedIn);
+            },
+          ),
+          ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+        },
       ),
     );
   }

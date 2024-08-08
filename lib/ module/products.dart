@@ -3,14 +3,14 @@ class Product {
   final String image;
   final String description;
   final double rating;
-  bool isFavorite; // Added field
+  bool isFavorite;
 
   Product({
     required this.title,
     required this.image,
     required this.description,
     required this.rating,
-    this.isFavorite = false, // Default value is false
+    this.isFavorite = false,
   });
 }
 
@@ -48,7 +48,6 @@ List<Product> foodItems = [
     isFavorite: false,
   ),
 ];
-
 
 List<Product> fetchFoodItems() {
   return List<Product>.from(foodItems);

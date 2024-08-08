@@ -1,11 +1,10 @@
-// home_screen.dart
-
 import 'package:flutter/material.dart';
-import 'package:food/screen/product_detail_screen.dart';
+import 'package:food/screen/favorites_screen.dart';
 import 'package:food/screen/produets_widget.dart';
 import 'package:food/screen/side_menu.dart';
+import 'package:food/screen/product_detail_screen.dart';
+
 import '../ module/products.dart';
-import 'favorites_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isLoggedIn;
@@ -20,7 +19,7 @@ class HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
   int _currentPageIndex = 0;
   Map<int, bool> _favorites = {};
-  List<Product> products = fetchFoodItems(); // Move products here
+  List<Product> products = fetchFoodItems();
 
   @override
   void initState() {
@@ -69,7 +68,6 @@ class HomeScreenState extends State<HomeScreen> {
           });
         },
         children: [
-          // HomeScreen
           Scaffold(
             body: ListView.builder(
               padding: EdgeInsets.all(16.0),
@@ -87,28 +85,25 @@ class HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => ProductDetailScreen(
-                          product: product,
-                          isLoggedIn: widget.isLoggedIn,
-                          isFavorite: isFavorite,
-                          toggleFavorite: () {
-                            setState(() {
-                              _favorites[index] = !_favorites[index]!;
-                            });
-                          },
-                        ),
-                      ),
+                      ProductDetailScreen.routeName,
+                      arguments: {
+                        'product': product,
+                        'isLoggedIn': widget.isLoggedIn,
+                        'isFavorite': isFavorite,
+                        'toggleFavorite': () {
+                          setState(() {
+                            _favorites[index] = !_favorites[index]!;
+                          });
+                        },
+                      },
                     );
                   },
                 );
               },
             ),
           ),
-
-          // FavoritesScreen (assuming it's similar to your original setup)
           FavoritesScreen(
             favorites: _favorites,
             products: products,
@@ -124,7 +119,6 @@ class HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-
       drawer: Drawer(
         child: SideMenuScreen(
           onClose: () {
