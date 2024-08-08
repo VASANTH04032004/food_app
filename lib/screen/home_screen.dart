@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:food/screen/favorites_screen.dart';
+import 'package:food/screen/product_detail_screen.dart';
 import 'package:food/screen/produets_widget.dart';
 import 'package:food/screen/side_menu.dart';
-import 'package:food/screen/product_detail_screen.dart';
-
-import '../ module/products.dart';
+import 'package:provider/provider.dart';
+import '../product_provider.dart';
+import 'favorites_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final bool isLoggedIn;
@@ -18,8 +18,6 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
   int _currentPageIndex = 0;
-  Map<int, bool> _favorites = {};
-  List<Product> products = fetchFoodItems();
 
   @override
   void initState() {
@@ -68,53 +66,45 @@ class HomeScreenState extends State<HomeScreen> {
           });
         },
         children: [
-          Scaffold(
-            body: ListView.builder(
-              padding: EdgeInsets.all(16.0),
-              itemCount: products.length,
-              itemBuilder: (context, index) {
-                final product = products[index];
-                final isFavorite = _favorites[index] ?? false;
+          Consumer<ProductProvider>(
+            builder: (context, productProvider, _) {
+              final products = productProvider.products;
+              return ListView.builder(
+                padding: EdgeInsets.all(16.0),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  final isFavorite = product.isFavorite;
 
-                return ProductCard(
-                  item: product,
-                  isFavorite: isFavorite,
-                  onToggleFavorite: () {
-                    setState(() {
-                      _favorites[index] = !isFavorite;
-                    });
-                  },
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      ProductDetailScreen.routeName,
-                      arguments: {
-                        'product': product,
-                        'isLoggedIn': widget.isLoggedIn,
-                        'isFavorite': isFavorite,
-                        'toggleFavorite': () {
-                          setState(() {
-                            _favorites[index] = !_favorites[index]!;
-                          });
+                  return ProductCard(
+                    item: product,
+                    isFavorite: isFavorite,
+                    onToggleFavorite: () {
+                      productProvider.toggleFavorite(product);
+                    },
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        ProductDetailScreen.routeName,
+                        arguments: {
+                          'product': product,
+                          'isLoggedIn': widget.isLoggedIn,
+                          'isFavorite': isFavorite,
+                          'toggleFavorite': () {
+                            productProvider.toggleFavorite(product);
+                          },
                         },
-                      },
-                    );
-                  },
-                );
-              },
-            ),
+                      );
+                    },
+                  );
+                },
+              );
+            },
           ),
           FavoritesScreen(
-            favorites: _favorites,
-            products: products,
+            // Pass the ProductProvider to FavoritesScreen
             toggleFavorite: (product) {
-              setState(() {
-                final index =
-                products.indexWhere((item) => item.title == product.title);
-                if (index != -1) {
-                  _favorites[index] = !_favorites[index]!;
-                }
-              });
+              context.read<ProductProvider>().toggleFavorite(product);
             },
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food/product_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:food/screen/home_screen.dart';
 import 'package:food/screen/product_detail_screen.dart';
@@ -12,22 +13,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => AuthProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Food App',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => Consumer<AuthProvider>(
-            builder: (context, authProvider, _) {
-              return HomeScreen(isLoggedIn: authProvider.isLoggedIn);
-            },
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => ProductProvider()), // Provide the ProductProvider
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Food App',
+          theme: ThemeData(
+            primarySwatch: Colors.orange,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
-        },
+          initialRoute: '/',
+          routes: {
+            '/': (context) => Consumer<AuthProvider>(
+              builder: (context, authProvider, _) {
+                return HomeScreen(isLoggedIn: authProvider.isLoggedIn);
+              },
+            ),
+            ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+          },
+        ),
       ),
     );
   }

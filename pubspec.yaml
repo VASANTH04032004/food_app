@@ -65,6 +65,26 @@ flutter:
     - lib/assets/ClassicCheeseburger.jpg
     - lib/assets/VeganBurger.jpg
     - lib/assets/chickenSandwich.jpg
+    - lib/assets/GardenSalad.jpg
+    - lib/assets/RoastedVegetables.jpg
+    - lib/assets/ApplePie.jpg
+    - lib/assets/FruitSalad.jpg
+    - lib/assets/MangoSmoothie.jpg
+    - lib/assets/CheddarCheese.jpg
+    - lib/assets/GreekYogurt.jpg
+    - lib/assets/Milk.jpg
+    - lib/assets/BrownRice.jpg
+    - lib/assets/Quinoa.jpg
+    - lib/assets/Oats.jpg
+    - lib/assets/ChocolateCake.jpg
+    - lib/assets/Cupcakes.jpg
+    - lib/assets/Macarons.jpg
+    - lib/assets/GreenTea.jpg
+    - lib/assets/Coffee.jpg
+    - lib/assets/OrangeJuice.jpg
+    - lib/assets/GrilledSalmon.jpg
+    - lib/assets/ShrimpCocktail.jpg
+    - lib/assets/TunaSashimi.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
