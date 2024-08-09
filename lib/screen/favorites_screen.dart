@@ -5,7 +5,6 @@ import '../ module/products.dart';
 import '../product_provider.dart';
 import 'product_detail_screen.dart';
 
-
 class FavoritesScreen extends StatelessWidget {
   final void Function(Product product) toggleFavorite;
   final bool isLoggedIn;
@@ -55,7 +54,14 @@ class FavoritesScreen extends StatelessWidget {
           ),
           body: Padding(
             padding: EdgeInsets.all(16.0),
-            child: ListView.builder(
+            child: favoriteProducts.isEmpty
+                ? Center(
+              child: Text(
+                'No Favorites Found.',
+                style: TextStyle(fontSize: 18.0),
+              ),
+            )
+                : ListView.builder(
               itemCount: favoriteProducts.length,
               itemBuilder: (context, index) {
                 final product = favoriteProducts[index];
