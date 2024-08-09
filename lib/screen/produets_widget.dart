@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../ module/products.dart';
 
 class ProductCard extends StatelessWidget {
@@ -7,12 +6,14 @@ class ProductCard extends StatelessWidget {
   final bool isFavorite;
   final VoidCallback onToggleFavorite;
   final VoidCallback onTap;
+  final bool isLoggedIn;
 
   ProductCard({
     required this.item,
     required this.isFavorite,
     required this.onToggleFavorite,
     required this.onTap,
+    required this.isLoggedIn,
   });
 
   @override
@@ -39,33 +40,34 @@ class ProductCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 20.0,
-                    top: 20.0,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      height: MediaQuery.of(context).size.width * 0.1,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 4.0,
-                            spreadRadius: 1.0,
-                          ),
-                        ],
-                      ),
-                      child: IconButton(
-                        icon: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : Color(0xFFEC407A),
-                          size: MediaQuery.of(context).size.width * 0.06,
+                  if (isLoggedIn) // Check if the user is logged in
+                    Positioned(
+                      right: 20.0,
+                      top: 20.0,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.1,
+                        height: MediaQuery.of(context).size.width * 0.1,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              blurRadius: 4.0,
+                              spreadRadius: 1.0,
+                            ),
+                          ],
                         ),
-                        onPressed: onToggleFavorite,
+                        child: IconButton(
+                          icon: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Color(0xFFEC407A),
+                            size: MediaQuery.of(context).size.width * 0.06,
+                          ),
+                          onPressed: onToggleFavorite,
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
               Padding(

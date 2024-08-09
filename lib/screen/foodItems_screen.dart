@@ -19,7 +19,7 @@ class _FoodItemsScreenState extends State<FoodItemsScreen> {
       appBar: AppBar(
         backgroundColor: Colors.orange,
         title: Text(
-          '${widget.categoryName} Items',
+          '${widget.categoryName}',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
