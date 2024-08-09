@@ -19,6 +19,28 @@ class FavoritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ProductProvider>(
       builder: (context, productProvider, _) {
+        // Check if the user is logged in
+        if (!isLoggedIn) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Favorites'),
+              leading: IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              ),
+            ),
+            body: Center(
+              child: Text(
+                'Please login to add to favorites.',
+                style: TextStyle(fontSize: 18.0),
+              ),
+            ),
+          );
+        }
+
+        // If logged in, show the list of favorite products
         final favoriteProducts = productProvider.products.where((p) => p.isFavorite).toList();
 
         return Scaffold(
