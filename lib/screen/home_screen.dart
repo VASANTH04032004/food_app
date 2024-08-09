@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:food/screen/product_detail_screen.dart';
 import 'package:food/screen/produets_widget.dart';
-import 'package:food/screen/side_menu.dart';
 import 'package:provider/provider.dart';
+import 'package:food/screen/product_detail_screen.dart';
+import 'package:food/screen/side_menu.dart';
 import '../product_provider.dart';
 import 'favorites_screen.dart';
 
@@ -96,16 +96,17 @@ class HomeScreenState extends State<HomeScreen> {
                         },
                       );
                     },
+                    isLoggedIn: widget.isLoggedIn, // Pass the isLoggedIn value here
                   );
                 },
               );
             },
           ),
           FavoritesScreen(
-            // Pass the ProductProvider to FavoritesScreen
             toggleFavorite: (product) {
               context.read<ProductProvider>().toggleFavorite(product);
             },
+            isLoggedIn: widget.isLoggedIn, // Pass the isLoggedIn value here
           ),
         ],
       ),

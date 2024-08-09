@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:food/screen/product_detail_screen.dart';
 import 'package:food/screen/produets_widget.dart';
 import 'package:provider/provider.dart';
 import '../ module/products.dart';
 import '../product_provider.dart';
+import 'product_detail_screen.dart';
+
 
 class FavoritesScreen extends StatelessWidget {
   final void Function(Product product) toggleFavorite;
+  final bool isLoggedIn;
 
   FavoritesScreen({
     required this.toggleFavorite,
+    required this.isLoggedIn,
   });
 
   @override
@@ -46,12 +49,13 @@ class FavoritesScreen extends StatelessWidget {
                       ProductDetailScreen.routeName,
                       arguments: {
                         'product': product,
-                        'isLoggedIn': true, // Assuming true for demo
+                        'isLoggedIn': isLoggedIn, // Pass the isLoggedIn value here
                         'isFavorite': true,
                         'toggleFavorite': () => productProvider.toggleFavorite(product),
                       },
                     );
                   },
+                  isLoggedIn: isLoggedIn, // Pass the isLoggedIn value here
                 );
               },
             ),

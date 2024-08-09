@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:food/screen/side_menu.dart';
-
 import '../ module/products.dart';
-
+import 'side_menu.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   static const routeName = '/productDetail';
@@ -70,21 +68,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   backgroundColor: Colors.orange,
                   actions: [
-                    GestureDetector(
-                      onTap: () {
-                        toggleFavorite(); // Toggle favorite status
-                        setState(() {
-                          isFavorite = !isFavorite;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : Colors.white,
+                    if (isLoggedIn) // Check if the user is logged in
+                      GestureDetector(
+                        onTap: () {
+                          toggleFavorite(); // Toggle favorite status
+                          setState(() {
+                            isFavorite = !isFavorite;
+                          });
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            isFavorite ? Icons.favorite : Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.white,
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 body: SingleChildScrollView(
